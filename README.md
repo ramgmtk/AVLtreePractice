@@ -1,0 +1,1 @@
+This repo is me for me practicing the implementation of an avl tree. We demonstrate bfs, dfs in order, and how to balance a tree.
