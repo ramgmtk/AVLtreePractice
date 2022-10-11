@@ -81,12 +81,17 @@ class tree {
         void print();
 };
 
+//INCOMPLETE
+template <class T>
+tree<T>::~tree() {
+    
+}
+
 template <class T>
 void tree<T>::insert(T data) {
     this->head = recurr_insert(data, head);
 }
 
-//INCOMPLETE
 template <class T>
 typename tree<T>::tree_node* tree<T>::recurr_insert(T data, tree_node* curr) {
     if (!curr) {
