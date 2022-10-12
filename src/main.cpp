@@ -10,5 +10,6 @@ int main(int argc, char** argv) {
     t->insert(8);
     t->insert(7);
     t->print();
+    delete t;
     return 0;
 }

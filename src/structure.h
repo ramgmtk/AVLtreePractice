@@ -74,6 +74,7 @@ class tree {
         void recurr_print(queue<tree_node*>* q);
         tree_node* right_rotate(tree_node* root);
         tree_node* left_rotate(tree_node* root);
+        void delete_tree(tree_node* root);
     public:
         tree() : head(nullptr), size(0) {}
         ~tree(); //we can perform some depthfirst post order traversel to clear nodes.
@@ -84,7 +85,19 @@ class tree {
 //INCOMPLETE
 template <class T>
 tree<T>::~tree() {
-    
+    this->delete_tree(this->head);
+}
+
+//dfs post order for deletion
+template <class T>
+void tree<T>::delete_tree(tree_node* root) {
+    if (root == nullptr) {
+        return;
+    } else {
+        this->delete_tree(root->right);
+        this->delete_tree(root->left);
+        delete root;
+    }
 }
 
 template <class T>
@@ -166,6 +179,7 @@ void tree<T>::print() {
     delete q;
 }
 
+//bfs for printing
 template <class T>
 void tree<T>::recurr_print(queue<tree<T>::tree_node*> *q) {
     if (q->is_empty()) return;
