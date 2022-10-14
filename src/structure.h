@@ -19,7 +19,9 @@ class queue {
         ~queue();
         void enqueue(U data);
         bool is_empty();
+        void find(U value);
         U dequeue();
+        void list_insert(U data);
 };
 
 template <class U>
@@ -38,6 +40,13 @@ void queue<U>::enqueue(U data) {
 }
 
 template <class U>
+void queue<U>::list_insert(U data) {
+    node* curr = new node(data);
+    curr->next = this->head->next;
+    head->next = curr;
+}
+
+template <class U>
 U queue<U>::dequeue() {
     if (this->head->next) {
         node* to_delete = this->head->next;
@@ -52,6 +61,14 @@ template <class U>
 bool queue<U>::is_empty() {
     if (this->head->next) return false;
     else return true;
+}
+
+template <class U>
+void queue<U>::find(U value) {
+    node* traverse = this->head->next;
+    while (traverse && traverse->data != value) traverse = traverse->next;
+    if (traverse) std::cout << "Found" << std:: endl;
+    else std::cout << "Not found." << std::endl;
 }
 //
 //Tree structure and members
@@ -74,10 +91,12 @@ class tree {
         void recurr_print(queue<tree_node*>* q);
         tree_node* right_rotate(tree_node* root);
         tree_node* left_rotate(tree_node* root);
+        tree_node* find(tree_node* root, T value);
         void delete_tree(tree_node* root);
     public:
         tree() : head(nullptr), size(0) {}
         ~tree(); //we can perform some depthfirst post order traversel to clear nodes.
+        void find(T value);
         void insert(T data);
         void print();
 };
@@ -97,6 +116,22 @@ void tree<T>::delete_tree(tree_node* root) {
         this->delete_tree(root->right);
         this->delete_tree(root->left);
         delete root;
+    }
+}
+
+template <class T>
+void tree<T>::find (T value) {
+    tree_node* target = this->find(this->head, value);
+    if (target) std::cout << "Found." << std::endl;
+    else std::cout << "Not found." << std::endl;
+}
+
+template <class T>
+typename tree<T>::tree_node* tree<T>::find(tree_node* root, T value) {
+    if (!root || root->data == value) return root;
+    else {
+        if (value < root->data) return this->find(root->left, value);
+        else return this->find(root->right, value);
     }
 }
 
